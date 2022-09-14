@@ -78,7 +78,7 @@ def main():
             "subsample": args.subsample,
             "seed": 42,
         }
-        model = xgb.train(params, dtrain, evals=[(dtrain, "train")], num_boost_round = args.iterations)
+        model = xgb.train(params, dtrain, evals=[(dtrain, "train"), (dtest, 'test')], num_boost_round = args.iterations)
 
         # evaluate model
         y_proba = model.predict(dtest)
@@ -87,7 +87,8 @@ def main():
         acc = accuracy_score(y_test, y_pred)
 
         # log metrics
-    mlflow.log_metrics({"log_loss": loss, "accuracy_score": acc})
+
+        mlflow.log_metrics({"log_loss": loss, "accuracy_score": acc})
 
 
 if __name__ == "__main__":
