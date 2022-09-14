@@ -87,7 +87,7 @@ def main():
         acc = accuracy_score(y_test, y_pred)
 
         # log metrics
-    #mlflow.log_metrics({"log_loss": loss, "accuracy": acc})
+    mlflow.log_metrics({"log_loss": loss, "accuracy_score": acc})
 
 
 if __name__ == "__main__":
