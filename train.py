@@ -50,6 +50,22 @@ def parse_args():
         help="number of training iterations",
     )
 
+    parser.add_argument(
+        "--alpha",
+        type=int,
+        default=0,
+        help="L1 regularization term on weights ",
+    )
+
+    parser.add_argument(
+        "--max-depth",
+        type=int,
+        default=1000,
+        help="max tree depth",
+    )
+
+
+
     return parser.parse_args()
 
 
@@ -81,6 +97,8 @@ def main():
             "colsample_bytree": args.colsample_bytree,
             "subsample": args.subsample,
             "seed": 42,
+            "alpha": args.alpha,
+            "max_depth":args.max_depth
         }
         model = xgb.train(params, dtrain, evals=[(dtrain, "train"), (dtest, 'test')], num_boost_round = args.iterations)
 
