@@ -12,6 +12,8 @@ import mlflow.xgboost
 
 mpl.use("Agg")
 
+def column_comma_to_point(column):
+    return column.str.replace(',','.')
 
 def parse_args():
     parser = argparse.ArgumentParser(description="XGBoost")
@@ -56,8 +58,10 @@ def main():
     args = parse_args()
     df = pd.read_csv(args.data, encoding='unicode escape', sep=';', na_values='.')
     df['meer_man'] = df['a_man'] > df['a_vrouw']
+    df['g_afs_sc'] = column_comma_to_point(df['g_afs_sc'])
+    #df['p_wmo_t'] = column_comma_to_point(df['p_wmo_t'])
     y = df['meer_man']
-    X = df[['a_gesch', 'a_geb']].astype(float)
+    X = df[['a_gesch', 'a_geb', 'g_afs_sc','p_wmo_t', 'a_bed_a']].astype(float)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
